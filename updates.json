@@ -2,9 +2,11 @@
   "homepage": "null",
   "promos": {
     "1.17.1-latest": "1.0.0",
-    // Declare the latest "bleeding-edge" version of your mod for the given Minecraft version
+    // Declare the latest "bleeding-edge" version of your mod for the given Minecraft version (1.17)
     "1.17.1-recommended": "1.0.0",
-    // Declare the latest "stable" version of your mod for the given Minecraft version
-    "1.18-recommended": "1.1.0"
+    // Declare the latest "stable" version of your mod for the given Minecraft version (1.18)
+    "1.18-recommended": "1.1.0",
+    // Declare the latest "stable" version of your mod for the given Minecraft version (1.19)
+    "1.19-recommended": "1.2.0"
   }
 }
