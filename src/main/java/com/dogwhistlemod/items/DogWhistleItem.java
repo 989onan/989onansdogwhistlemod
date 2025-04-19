@@ -1,75 +1,85 @@
 package com.dogwhistlemod.items;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 
+import com.dogwhistlemod.Onansdogwhistlemod;
+import com.dogwhistlemod.components.Components;
 import com.google.common.collect.Lists;
-
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ShortTag;
-import net.minecraft.stats.Stats;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.animal.Wolf;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import net.minecraft.component.ComponentType;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.TooltipDisplayComponent;
+import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.stat.Stats;
+import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
+import net.minecraft.entity.passive.WolfEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TranslatableOption;
+import net.minecraft.world.World;
 
 public class DogWhistleItem extends Item{
+
+
+
+	//indicate to user if mob is sitting or standing
+	// also why tf is this depreciated?  there's no way of adding tooltips without this method. I tore my hair out worrying about this needless depreciation for nothing. - @989onan
+	@Override
+	public void appendTooltip(ItemStack itemstack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
+
+		if (itemstack.contains(Components.SIT_OR_STAND)) {
+			if(itemstack.get(Components.SIT_OR_STAND) == 0){
+				textConsumer.accept(Text.translatable("itemTooltip.onansdogwhistlemod.dog_whistle_stand"));
+			}
+			else{
+				textConsumer.accept(Text.translatable("itemTooltip.onansdogwhistlemod.dog_whistle_sit"));
+			}
+		}
+	}
 	
-	
-	
-	
-	
-	public DogWhistleItem(Properties p_41383_) {
-		super(p_41383_);
-		// TODO Auto-generated constructor stub
+	public DogWhistleItem(Settings settings) {
+		super(settings);
 	}
 	
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
-		ItemStack itemstack = player.getItemInHand(hand);
+	public ActionResult use(World world, PlayerEntity player, Hand hand) {
+		if (world.isClient) {
+			return ActionResult.PASS;
+		}
+
+		ItemStack itemstack = player.getStackInHand(hand);
+
 		
-		CompoundTag compoundtag = itemstack.getOrCreateTag();
-        if (!compoundtag.contains("SitOrStand")) {
-           compoundtag.putShort("SitOrStand", (short) 0);
-        }
-		
-        if(!player.isCrouching()) {
+        if(!player.isSneaking()) {
 	        
 			
-			List<Wolf> list = world.getEntitiesOfClass(Wolf.class, player.getBoundingBox().inflate(40.0));
-			List<Wolf> list1 = Lists.newArrayList();
-			
-			list.forEach((wolf)->{
-				if (wolf.getOwner() == player) {
-					list1.add(wolf);
-				}
-			});
-			if(((ShortTag) compoundtag.get("SitOrStand")).getAsInt() == 0){
-				list1.forEach((wolf) ->{
-					((Wolf)wolf).setOrderedToSit(true);
+			List<WolfEntity> list = world.getEntitiesByClass(WolfEntity.class, player.getBoundingBox().expand(40.0), (o) -> o.getOwner() == player);
+			if(itemstack.get(Components.SIT_OR_STAND) == 0){
+				list.forEach((wolf) ->{
+					wolf.setSitting(true);
+
 				});
 			}
 			else {
-				list1.forEach((wolf) ->{
-					((Wolf)wolf).setOrderedToSit(false);
+				list.forEach((wolf) ->{
+					wolf.setSitting(false);
 				});
 			}
-			player.awardStat(Stats.ITEM_USED.get(this));
+			//player.increaseStat(Stats.USED.getOrCreateStat(Onansdogwhistlemod.DOG_WHISTLE_REGISTRY), 1);
         }
         else { //if the player is standing, change mode
-        	if(((ShortTag) compoundtag.get("SitOrStand")).getAsInt() == 0) {
-        		compoundtag.putShort("SitOrStand", (short) 1);
-        	}
-        	else {
-        		compoundtag.putShort("SitOrStand", (short) 0);
-        	}
+			if (itemstack.contains(Components.SIT_OR_STAND)) {
+				itemstack.set(Components.SIT_OR_STAND, (short)(itemstack.get(Components.SIT_OR_STAND) == 0 ? 1:0));
+			}
         }
+
 		
 		
-		return InteractionResultHolder.sidedSuccess(itemstack, world.isClientSide());
+		return ActionResult.SUCCESS;
 	}
 	
 }

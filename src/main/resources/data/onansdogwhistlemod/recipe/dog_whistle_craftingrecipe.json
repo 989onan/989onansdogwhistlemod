@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "I  ",
+        " II",
+        " II"
+    ],
+    "key":
+    {
+        "I": "minecraft:iron_nugget"
+    },
+    "result":
+    {
+        "id": "onansdogwhistlemod:dog_whistle",
+        "count": 1
+    }
+}

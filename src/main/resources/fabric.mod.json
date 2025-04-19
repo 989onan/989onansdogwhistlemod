@@ -1,0 +1,31 @@
+{
+	"schemaVersion": 1,
+	"id": "onansdogwhistlemod",
+	"version": "${version}",
+	"name": "989onan's Dog Whistle Mod",
+	"description": "Adds a whistle that can command dogs to sit down or stand up",
+	"authors": [
+		"989onan"
+	],
+	"contact": {
+		"homepage": "https://www.curseforge.com/minecraft/mc-mods/dog-command-whistle",
+		"sources": "https://github.com/989onan/989onansdogwhistlemod"
+	},
+	"license": "CCBYA-1.0",
+	"icon": "assets/onansdogwhistlemod/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.dogwhistlemod.Onansdogwhistlemod"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.16.13",
+		"minecraft": "~1.21.5",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

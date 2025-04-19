@@ -1,3 +1,5 @@
 {
-	"item.onansdogwhistlemod.dog_whistle": "Dog Whistle"
+	"item.onansdogwhistlemod.dog_whistle": "Dog Whistle",
+	"itemTooltip.onansdogwhistlemod.dog_whistle_stand": "Currently set to make stand up.",
+	"itemTooltip.onansdogwhistlemod.dog_whistle_sit": "Currently set to make sit down."
 }
