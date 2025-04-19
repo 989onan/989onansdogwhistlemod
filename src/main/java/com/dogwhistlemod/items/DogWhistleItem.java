@@ -4,14 +4,9 @@ import java.util.List;
 import java.util.function.Consumer;
 
 
-import com.dogwhistlemod.Onansdogwhistlemod;
 import com.dogwhistlemod.components.Components;
-import com.google.common.collect.Lists;
-import net.minecraft.component.ComponentType;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.entity.passive.WolfEntity;
@@ -19,7 +14,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TranslatableOption;
 import net.minecraft.world.World;
 
 public class DogWhistleItem extends Item{

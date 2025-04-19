@@ -24,7 +24,6 @@ loom {
 	mods {
 		"onansdogwhistlemod" {
 			sourceSet sourceSets.main
-			sourceSet sourceSets.client
 		}
 	}
 
